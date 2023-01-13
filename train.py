@@ -49,11 +49,14 @@ def train(args):
     logging.info("Loading Data...")
     train_dataset = TextDataset(args, args.train_file_path)
     valid_dataset = TextDataset(args, args.test_file_path)
+    vocab_to_int = dh.create_vocab([train_dataset.data, valid_dataset.data])
+    train_dataset.generate_examples(vocab_to_int)
+    valid_dataset.generate_examples(vocab_to_int)
 
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, drop_last=True, num_workers=4)
     val_loader = DataLoader(valid_dataset, batch_size=args.batch_size, shuffle=True, drop_last=True, num_workers=4)
     
-    vocab_size = dh.get_vocab_size(args.train_file_path, args.test_file_path)
+    vocab_size = len(vocab_to_int)
     
     logging.info("Init nn...")
     net = HARNN(num_classes_list=args.num_classes_layer, total_classes=args.total_classes, vocab_size=vocab_size,
@@ -203,8 +206,8 @@ def main():
     args.num_classes_layer = [9, 128, 661, 8364]
     args.total_classes = 9162
 
-    args.train_file_path = 'data/Train.json'
-    args.test_file_path = 'data/Test.json'
+    args.train_file_path = 'data/sample1.json'
+    args.test_file_path = 'data/sample2.json'
     args.valid_file_path = 'data/validation_sample.json'
 
     args.print_every = 1
@@ -215,7 +218,7 @@ def main():
     args.seq_length = 256
 
     
-    args.batch_size = 2
+    args.batch_size = 20  #args.batch_size = 2
     args.epochs = 20
     args.max_grad_norm = 0.1
     args.drop_prob = 0.5

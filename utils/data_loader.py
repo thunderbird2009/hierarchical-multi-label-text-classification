@@ -57,17 +57,20 @@ def convert_examples_to_features(js, args, vocab_to_int):
 class TextDataset(Dataset):
     def __init__(self, args, file_path) -> None:
         self.examples = []
-        data = []
+        self.data = []
+        self.args = args
         with open(file_path) as f:
             for line in f:
                 js = json.loads(line)
-                data.append(js)
-        
-        vocab_to_int = data_helper.create_vocab(data)
-        self.vocab_size = len(vocab_to_int)
+                self.data.append(js)
 
-        for js in data:
-            self.examples.append(convert_examples_to_features(js,args, vocab_to_int))
+    def generate_examples(self, vocab_to_int) -> None: 
+        # vocab_to_int = data_helper.create_vocab(data)
+        self.vocab_size = len(vocab_to_int)
+        for js in self.data:
+            self.examples.append(convert_examples_to_features(
+                js, self.args, vocab_to_int))
+        self.data = []
 
     def __len__(self):
         return len(self.examples)
