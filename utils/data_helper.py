@@ -13,7 +13,7 @@ def create_vocab(datasets):
 
     counts = Counter(words)
     vocab = sorted(counts, key=counts.get, reverse=True)
-    vocab_to_int = {word: ii for ii, word in enumerate(vocab, 1)}
+    vocab_to_int = {word: ii for ii, word in enumerate(vocab)}
     return vocab_to_int
 
 def get_onehot_label_threshold(scores, threshold=0.5):

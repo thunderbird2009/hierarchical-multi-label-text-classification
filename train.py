@@ -76,6 +76,7 @@ def train(args):
 
     logging.info("Training...")
     # writer = SummaryWriter('summary')
+    best_auprc = 0.0
     for epoch in range(args.epochs):
         train_loss = 0.0
         train_cnt = 0
@@ -219,7 +220,7 @@ def main():
 
     
     args.batch_size = 20  #args.batch_size = 2
-    args.epochs = 20
+    args.epochs = 5 # 20
     args.max_grad_norm = 0.1
     args.drop_prob = 0.5
     args.l2_reg_lambda = 0
