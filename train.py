@@ -203,8 +203,8 @@ def main():
     args.num_classes_layer = [9, 128, 661, 8364]
     args.total_classes = 9162
 
-    args.train_file_path = 'data/train_sample.json'
-    args.test_file_path = 'data/test_sample.json'
+    args.train_file_path = 'data/Train.json'
+    args.test_file_path = 'data/Test.json'
     args.valid_file_path = 'data/validation_sample.json'
 
     args.print_every = 1

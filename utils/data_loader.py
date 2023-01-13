@@ -27,7 +27,7 @@ def convert_examples_to_features(js, args, vocab_to_int):
     def _pad_features(texts_ints, seq_length):
         features = np.zeros((1, seq_length), dtype=int)
         
-        features[0,-texts_ints.shape[1]:] = np.array(texts_ints)[:seq_length]
+        features[0,-min(texts_ints.shape[1], seq_length):] = np.array(texts_ints)[0, :seq_length]
 
         # for i, row in enumerate(texts_ints):
         #     features[i, -len(row):] = np.array(row)[:seq_length]
